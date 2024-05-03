@@ -1,0 +1,20 @@
+<h1>User Activity Logs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Activity</th>
+      <th>Timestamp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @user_activity_logs.each do |log| %>
+      <tr>
+        <td><%= log.user.email %></td>
+        <td><%= log.activity %></td>
+        <td><%= log.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

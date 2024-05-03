@@ -1,0 +1,16 @@
+<div class="bg-gray-100 rounded-lg p-6 mb-6">
+  <h2 class="text-2xl font-bold mb-4">Your AI Models</h2>
+  <% current_user.ai_models.each do |ai_model| %>
+    <div class="mb-4">
+      <p class="text-lg font-semibold"><%= ai_model.name %>: <%= ai_model.availability ? "Available" : "Unavailable" %></p>
+      <% if ai_model.availability %>
+        <%= form_tag(toggle_availability_user_path(ai_model), method: :post, class: "mt-4", data: { confirm: 'Are you sure?' }) %>
+        <%= submit_tag("Make Unavailable", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded") %>
+      <% else %>
+        <%= form_tag(toggle_availability_user_path(ai_model), method: :post, class: "mt-4", data: { confirm: 'Are you sure?' }) %>
+        <%= submit_tag("Make Available", class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded") %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+

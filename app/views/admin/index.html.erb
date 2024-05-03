@@ -1,0 +1,47 @@
+<div class="container mx-auto">
+  <h1 class="text-3xl font-bold mb-6">Admin Dashboard</h1>
+
+  <div class="bg-gray-100 rounded-lg p-6 mb-6">
+    <h2 class="text-xl font-bold mb-2">Total Users</h2>
+    <p class="text-lg"><%= @total_users %></p>
+  </div>
+
+  <div class="bg-gray-100 rounded-lg p-6 mb-6">
+    <h2 class="text-xl font-bold mb-2">Total AI Models</h2>
+    <p class="text-lg"><%= @total_ai_models %></p>
+  </div>
+
+  <div class="bg-gray-100 rounded-lg p-6 mb-6">
+  <h2 class="text-2xl font-bold mb-4">AI Model Availability</h2>
+  <% @ai_models.each do |ai_model| %>
+    <div class="mb-4">
+      <p class="text-lg font-semibold"><%= ai_model.name %>: <%= ai_model.availability ? "Available" : "Unavailable" %></p>
+      <%= form_tag(toggle_availability_path(ai_model), method: :post, class: "mt-2") do %>
+        <%= submit_tag(ai_model.availability ? "Make Unavailable" : "Make Available", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded") %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<div class="bg-gray-100 rounded-lg p-6">
+  <h2 class="text-2xl font-bold mb-4">Users with AI Models</h2>
+  <% @users_with_ai_models.uniq.each do |user| %>
+    <div class="mb-4">
+      <h3 class="text-lg font-bold">User: <%= user.email %></h3>
+      <% if user.ai_models.any? %>
+        <ul class="list-disc pl-6 mt-2">
+          <% user.ai_models.uniq.each do |ai_model| %>
+            <li>
+              <%= ai_model.name %>
+              <% unless ai_model.availability %>
+                <span class="text-red-500 font-italic ml-2">(Unavailable)</span>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="mt-2">No AI models associated with this user.</p>
+      <% end %>
+    </div>
+  <% end %>
+</div>

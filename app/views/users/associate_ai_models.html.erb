@@ -1,0 +1,20 @@
+<%= form_with(model: current_user, url: associate_ai_models_path, method: :post) do |f| %>
+  <div class="flex flex-col space-y-2">
+    <% AiModel.all.each do |ai_model| %>
+      <div class="flex items-center">
+        <div>
+          <%= check_box_tag "user[ai_model_ids][]", ai_model.id, current_user.ai_models.include?(ai_model), class: "mr-2" %>
+          <%= label_tag "user_ai_model_ids_#{ai_model.id}", ai_model.name, class: "text-sm" %>
+        </div>
+        <span class="<%= ai_model.availability ? 'text-green-500' : 'text-red-500' %>">
+          <%= ai_model.availability ? 'Available' : 'Unavailable' %>
+        </span>
+      </div>
+    <% end %>
+  </div>
+
+  <%= f.submit "Save AI Models", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+<% end %>
+
+
+   
