@@ -1,5 +1,10 @@
 class AdminController < ApplicationController
      before_action :authenticate_admin!
+     layout :choose_layout
+
+     def choose_layout
+      current_user.admin? ? 'admin' : 'user'
+     end
    
      def index
       @current_admin = current_user
