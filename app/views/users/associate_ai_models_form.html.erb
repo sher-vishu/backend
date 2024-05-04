@@ -5,19 +5,9 @@
     <% AiModel.all.each do |ai_model| %>
       <div class="flex items-center justify-between py-2 border-b border-gray-200">
       <div class="flex items-center">
-          <%= check_box_tag "user[ai_model_ids][]", ai_model.id, current_user.ai_models.include?(ai_model), { class: "mr-2", disabled: !ai_model.availability || ai_model.user.present? } %>
+          <%= check_box_tag "user[ai_model_ids][]", ai_model.id, current_user.ai_models.include?(ai_model), { class: "mr-2", disabled: !ai_model.availability } %>
           <%= label_tag "user_ai_model_ids_#{ai_model.id}", ai_model.name, class: "text-sm" %>
         </div>
-        <div class="flex items-center">
-        <span class="font-bold mr-1">Status:</span>
-        <% if current_user.ai_models.include?(ai_model) %>
-              <span class="<%= ai_model.availability ? 'text-green-500' : 'text-red-500' %>">
-                <%= ai_model.availability ? 'Available' : 'Unavailable' %>
-              </span>
-            <% else %>
-              <span class="text-red-500">Unavailable</span>
-            <% end %>
-      </div>
     </div>
     <% end %>
   </div>
