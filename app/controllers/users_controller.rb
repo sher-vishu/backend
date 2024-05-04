@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
      before_action :authenticate_user!
      before_action :set_user, only: [:show, :edit, :update, :destroy]
-   
+ 
      def associate_ai_models_form
       @user = current_user
       @ai_models = AiModel.all
