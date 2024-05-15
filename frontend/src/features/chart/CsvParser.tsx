@@ -3,11 +3,7 @@ import Papa from 'papaparse';
 import UmapScatterChart from './ScatterPlot'; 
 import { DataPoint } from '../../types/types';
 
-interface CsvParserProps {
-  onDataParsed: (data: DataPoint[]) => void;
-}
-
-const CsvParser: React.FC<CsvParserProps> = ({ onDataParsed }) => {
+const CsvParser: React.FC = () => {
   const [chartData, setChartData] = useState<DataPoint[]>([]);
   const [downsampledData, setDownsampledData] = useState<DataPoint[]>([]);
 
@@ -55,8 +51,10 @@ const CsvParser: React.FC<CsvParserProps> = ({ onDataParsed }) => {
 
   return (
     <div>
-      <h2>Scatter Plot</h2>
+      <h1 className='p-2 mb-5'>UMAP Scatter Plot</h1>
+      <div>
       {downsampledData.length > 0 && <UmapScatterChart data={downsampledData} />}
+      </div>
     </div>
   );
 };

@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Scatter } from 'react-chartjs-2';
-import Papa from 'papaparse';
 import { DataPoint } from '../../types/types';
 import {
   Chart as ChartJS,
@@ -43,21 +42,7 @@ const getColorForLabel = (label: number): string => {
 
 const UmapScatterChart: React.FC<UmapScatterChartProps> = ({ data }) => {
 
-  console.log(data)
-
-  const [chartData, setChartData] = useState<any>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('/umap_all_cells.csv');
-        const text = await response.text();
-
-        Papa.parse(text, {
-          header: true,
-          dynamicTyping: true,
-          complete: (result: any) => {
-            const scatterData = {
+            const chartData = {
               datasets: data.map(dataPoint => ({
                 label: `Label ${dataPoint.labels}`,
                 data: [{ x: dataPoint.x, y: dataPoint.y }],
@@ -67,15 +52,6 @@ const UmapScatterChart: React.FC<UmapScatterChartProps> = ({ data }) => {
                 pointHoverRadius: 4
               }))
             };
-            setChartData(scatterData)
-          }
-        });
-      } catch(error){
-        console.error('Error fetching CSV file:', error);
-      }
-    };
-    fetchData();
-  }, [data]);
 
   const options = {
     scales: {
@@ -115,11 +91,7 @@ const UmapScatterChart: React.FC<UmapScatterChartProps> = ({ data }) => {
 
   return (
     <div>
-      {chartData ? (
         <Scatter data={chartData} options={options}/>
-      ) : (
-        <div>Loading...</div>
-      )}
     </div>
   );
 };
