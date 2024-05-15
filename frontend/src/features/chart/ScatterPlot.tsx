@@ -46,6 +46,7 @@ const UmapScatterChart: React.FC<UmapScatterChartProps> = ({ data }) => {
               datasets: data.map(dataPoint => ({
                 label: `Label ${dataPoint.labels}`,
                 data: [{ x: dataPoint.x, y: dataPoint.y }],
+                barcode: dataPoint.barcode,
                 backgroundColor: getColorForLabel(dataPoint.labels),
                 borderColor: getColorForLabel(dataPoint.labels),
                 pointRadius: 1,
@@ -78,16 +79,16 @@ const UmapScatterChart: React.FC<UmapScatterChartProps> = ({ data }) => {
       },
       tooltip: {
         callbacks: {
-          label: (context: any) => {
-            const dataPointIndex = context.dataIndex;
-            const dataPoint = data[dataPointIndex];
-            console.log(dataPointIndex)
+          label: function(context: any) {
+            const dataPoint = data[context.datasetIndex];
             return `Barcode: ${dataPoint.barcode}`;
           }
         }
       }
     }
   }as const;
+
+console.log("data", data)
 
   return (
     <div>
