@@ -11,22 +11,19 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.1].define(version: 2024_04_27_230847) do
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "ai_models", force: :cascade do |t|
     t.string "name"
     t.boolean "availability"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id"
+    t.integer "user_id"
     t.boolean "available_status"
     t.index ["user_id"], name: "index_ai_models_on_user_id"
   end
 
   create_table "ai_models_users", force: :cascade do |t|
-    t.bigint "ai_model_id", null: false
-    t.bigint "user_id", null: false
+    t.integer "ai_model_id", null: false
+    t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["ai_model_id"], name: "index_ai_models_users_on_ai_model_id"
@@ -34,7 +31,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_27_230847) do
   end
 
   create_table "user_activity_logs", force: :cascade do |t|
-    t.bigint "user_id", null: false
+    t.integer "user_id", null: false
     t.string "activity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
